@@ -1,0 +1,6 @@
+{
+  "name": "StudyPal",
+  "description": "A study companion app with dashboard, history, learning, and quizzes.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
