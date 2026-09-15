@@ -86,15 +86,15 @@ export default function Learn() {
         <div className="space-y-6">
           <button 
             onClick={() => setActiveModule(null)}
-            className="flex items-center space-x-2 text-sm font-semibold text-blue-900 bg-white border border-gray-200 px-4 py-2.5 rounded-xl hover:bg-gray-50 transition-colors shadow-sm self-start"
+            className="flex items-center space-x-2 text-sm font-semibold text-blue-900 dark:text-yellow-400 bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 px-4 py-2.5 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors shadow-sm self-start cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4 text-yellow-500" />
             <span>Back to Library</span>
           </button>
 
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden">
             {/* Header banner */}
-            <div className="bg-blue-950 p-6 sm:p-8 text-white relative">
+            <div className="bg-blue-950 dark:bg-slate-950 p-6 sm:p-8 text-white relative">
               <div className="absolute top-0 right-0 p-8 opacity-10">
                 <BookOpen className="w-40 h-40" />
               </div>
@@ -105,23 +105,23 @@ export default function Learn() {
                 <span className={`text-xs font-bold px-2.5 py-1 rounded border ${getDifficultyColor(activeModule.difficulty)}`}>
                   {activeModule.difficulty}
                 </span>
-                <span className="text-xs text-blue-200 flex items-center ml-2">
+                <span className="text-xs text-blue-200 dark:text-slate-400 flex items-center ml-2">
                   <Clock className="w-3.5 h-3.5 mr-1 text-yellow-400" />
                   {activeModule.readTime}
                 </span>
               </div>
               <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-yellow-400">{activeModule.title}</h1>
-              <p className="text-blue-200 mt-2 text-sm sm:text-base max-w-3xl">{activeModule.description}</p>
+              <p className="text-blue-200 dark:text-slate-300 mt-2 text-sm sm:text-base max-w-3xl">{activeModule.description}</p>
             </div>
 
             <div className="p-6 sm:p-8 space-y-8">
               {/* Learning Objectives & Actions */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="md:col-span-2 bg-yellow-50/40 p-5 rounded-xl border border-yellow-100/70">
-                  <h3 className="font-bold text-blue-950 text-sm uppercase tracking-wider mb-3">Learning Objectives</h3>
+                <div className="md:col-span-2 bg-yellow-50/40 dark:bg-yellow-950/20 p-5 rounded-xl border border-yellow-100/70 dark:border-yellow-900/40">
+                  <h3 className="font-bold text-blue-950 dark:text-yellow-400 text-sm uppercase tracking-wider mb-3">Learning Objectives</h3>
                   <ul className="space-y-2.5">
                     {activeModule.objectives.map((obj, idx) => (
-                      <li key={idx} className="flex items-start text-sm text-gray-700">
+                      <li key={idx} className="flex items-start text-sm text-gray-700 dark:text-slate-200">
                         <CheckCircle className="w-4 h-4 text-emerald-500 mt-0.5 mr-2.5 flex-shrink-0" />
                         <span>{obj}</span>
                       </li>
@@ -129,13 +129,13 @@ export default function Learn() {
                   </ul>
                 </div>
 
-                <div className="bg-blue-50/30 p-5 rounded-xl border border-blue-100/50 flex flex-col justify-center items-center text-center">
-                  <Award className={`w-10 h-10 mb-2 ${completedModules.includes(activeModule.id) ? 'text-yellow-500' : 'text-gray-300'}`} />
-                  <p className="text-sm font-semibold text-blue-950">Study Progress</p>
-                  <p className="text-xs text-gray-500 mt-1 mb-4">Mark as completed to track your study goals.</p>
+                <div className="bg-blue-50/30 dark:bg-slate-800/40 p-5 rounded-xl border border-blue-100/50 dark:border-slate-700/60 flex flex-col justify-center items-center text-center">
+                  <Award className={`w-10 h-10 mb-2 ${completedModules.includes(activeModule.id) ? 'text-yellow-500' : 'text-gray-300 dark:text-slate-600'}`} />
+                  <p className="text-sm font-semibold text-blue-950 dark:text-white">Study Progress</p>
+                  <p className="text-xs text-gray-500 dark:text-slate-400 mt-1 mb-4">Mark as completed to track your study goals.</p>
                   <button
                     onClick={() => toggleComplete(activeModule.id)}
-                    className={`w-full py-2 px-4 rounded-lg text-sm font-bold transition-all flex items-center justify-center space-x-2 ${
+                    className={`w-full py-2 px-4 rounded-lg text-sm font-bold transition-all flex items-center justify-center space-x-2 cursor-pointer ${
                       completedModules.includes(activeModule.id)
                         ? "bg-emerald-600 text-white hover:bg-emerald-700"
                         : "bg-yellow-400 text-blue-950 hover:bg-yellow-500"
@@ -154,18 +154,18 @@ export default function Learn() {
               </div>
 
               {/* Study Content */}
-              <div className="prose prose-blue max-w-none md:prose-base markdown-body border-t border-gray-100 pt-8">
+              <div className="prose prose-blue dark:prose-invert max-w-none md:prose-base markdown-body border-t border-gray-100 dark:border-slate-800 pt-8 text-slate-800 dark:text-slate-200">
                 <Markdown>{activeModule.contentMarkdown}</Markdown>
               </div>
 
               {/* Key Terms Glossary */}
-              <div className="border-t border-gray-100 pt-8 space-y-4">
-                <h3 className="font-bold text-blue-950 text-sm uppercase tracking-wider">Key Terms Glossary</h3>
+              <div className="border-t border-gray-100 dark:border-slate-800 pt-8 space-y-4">
+                <h3 className="font-bold text-blue-950 dark:text-yellow-400 text-sm uppercase tracking-wider">Key Terms Glossary</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   {activeModule.keyTerms.map((kt, idx) => (
-                    <div key={idx} className="p-4 rounded-xl border border-gray-100 bg-gray-50/50 hover:bg-white hover:shadow-sm transition-all">
-                      <p className="font-bold text-sm text-blue-900">{kt.term}</p>
-                      <p className="text-xs text-gray-600 mt-1">{kt.definition}</p>
+                    <div key={idx} className="p-4 rounded-xl border border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-800/40 hover:bg-white dark:hover:bg-slate-800 hover:shadow-sm transition-all">
+                      <p className="font-bold text-sm text-blue-900 dark:text-yellow-400">{kt.term}</p>
+                      <p className="text-xs text-gray-600 dark:text-slate-300 mt-1">{kt.definition}</p>
                     </div>
                   ))}
                 </div>
@@ -178,8 +178,8 @@ export default function Learn() {
         <>
           <header className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold tracking-tight text-gray-900">Study Library</h1>
-              <p className="text-gray-500 mt-1">Access structured, high-quality reference guides curated for quick learning.</p>
+              <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">Study Library</h1>
+              <p className="text-gray-500 dark:text-slate-400 mt-1">Access structured, high-quality reference guides curated for quick learning.</p>
             </div>
             <div className="p-3 bg-yellow-400 text-blue-950 rounded-full shadow-sm">
               <BookOpen className="w-6 h-6" />
@@ -188,33 +188,33 @@ export default function Learn() {
 
           {/* Library Stats Indicator */}
           {completedModules.length > 0 && (
-            <div className="bg-blue-950 text-white p-4 rounded-xl border border-blue-900 flex items-center justify-between shadow-sm">
+            <div className="bg-blue-950 dark:bg-slate-900 text-white p-4 rounded-xl border border-blue-900 dark:border-slate-800 flex items-center justify-between shadow-sm">
               <div className="flex items-center space-x-3">
                 <BookOpenCheck className="w-5 h-5 text-yellow-400" />
                 <div>
                   <span className="font-semibold text-sm">Library Progress: </span>
-                  <span className="text-xs text-blue-200">
+                  <span className="text-xs text-blue-200 dark:text-slate-400">
                     You have finished {completedModules.length} of {STUDY_MODULES.length} study guides!
                   </span>
                 </div>
               </div>
-              <div className="text-xs font-bold text-yellow-400 bg-blue-900 px-2.5 py-1 rounded-full">
+              <div className="text-xs font-bold text-yellow-400 bg-blue-900 dark:bg-slate-800 px-2.5 py-1 rounded-full">
                 {Math.round((completedModules.length / STUDY_MODULES.length) * 100)}% Done
               </div>
             </div>
           )}
 
           {/* Search and Filters */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 bg-white dark:bg-slate-900 p-4 rounded-xl border border-gray-100 dark:border-slate-800 shadow-sm">
             {/* Search Input */}
             <div className="md:col-span-6 relative">
-              <Search className="w-4 h-4 text-gray-400 absolute left-3 top-3.5" />
+              <Search className="w-4 h-4 text-gray-400 dark:text-slate-500 absolute left-3 top-3.5" />
               <input
                 type="text"
                 placeholder="Search tutorials, definitions, and concepts..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-9 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
+                className="w-full pl-9 pr-4 py-2.5 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-500"
               />
             </div>
 
@@ -223,7 +223,7 @@ export default function Learn() {
               <select
                 value={selectedSubject}
                 onChange={(e) => setSelectedSubject(e.target.value)}
-                className="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700 font-medium"
+                className="w-full px-3 py-2.5 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700 dark:text-slate-100 font-medium"
               >
                 <option value="All">All Subjects</option>
                 {subjects.filter(s => s !== "All").map(subj => (
@@ -237,7 +237,7 @@ export default function Learn() {
               <select
                 value={selectedDifficulty}
                 onChange={(e) => setSelectedDifficulty(e.target.value)}
-                className="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700 font-medium"
+                className="w-full px-3 py-2.5 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700 dark:text-slate-100 font-medium"
               >
                 <option value="All">All Levels</option>
                 <option value="Beginner">Beginner</option>
@@ -249,10 +249,10 @@ export default function Learn() {
 
           {/* Library Grid */}
           {filteredModules.length === 0 ? (
-            <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-12 text-center text-gray-400 border-dashed">
-              <Search className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-              <p className="text-lg font-semibold text-gray-600">No guides matched your criteria</p>
-              <p className="text-sm text-gray-400 mt-1">Try resetting your subject or difficulty filters.</p>
+            <div className="bg-white dark:bg-slate-900 rounded-xl border border-gray-100 dark:border-slate-800 shadow-sm p-12 text-center text-gray-400 dark:text-slate-500 border-dashed">
+              <Search className="w-12 h-12 mx-auto mb-3 text-gray-300 dark:text-slate-600" />
+              <p className="text-lg font-semibold text-gray-600 dark:text-slate-300">No guides matched your criteria</p>
+              <p className="text-sm text-gray-400 dark:text-slate-400 mt-1">Try resetting your subject or difficulty filters.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
@@ -261,8 +261,10 @@ export default function Learn() {
                 return (
                   <div 
                     key={module.id} 
-                    className={`bg-white rounded-xl border transition-all hover:-translate-y-0.5 hover:shadow-md flex flex-col justify-between ${
-                      isFinished ? 'border-emerald-200 shadow-sm bg-emerald-50/10' : 'border-gray-100 shadow-sm'
+                    className={`bg-white dark:bg-slate-900 rounded-xl border transition-all hover:-translate-y-0.5 hover:shadow-md flex flex-col justify-between ${
+                      isFinished 
+                        ? 'border-emerald-200 dark:border-emerald-900/60 shadow-sm bg-emerald-50/10 dark:bg-emerald-950/20' 
+                        : 'border-gray-100 dark:border-slate-800 shadow-sm'
                     }`}
                   >
                     <div className="p-6 space-y-4">
@@ -274,8 +276,8 @@ export default function Learn() {
                         
                         <div className="flex items-center space-x-1.5">
                           {isFinished && (
-                            <span className="flex items-center text-[10px] text-emerald-600 font-semibold bg-emerald-100/60 px-2 py-0.5 rounded">
-                              <CheckCircle className="w-3 h-3 mr-0.5 text-emerald-600" />
+                            <span className="flex items-center text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold bg-emerald-100/60 dark:bg-emerald-950/60 px-2 py-0.5 rounded">
+                              <CheckCircle className="w-3 h-3 mr-0.5 text-emerald-600 dark:text-emerald-400" />
                               Done
                             </span>
                           )}
@@ -287,28 +289,28 @@ export default function Learn() {
 
                       {/* Content */}
                       <div>
-                        <h3 className="font-bold text-gray-900 group-hover:text-blue-600 text-lg leading-snug">
+                        <h3 className="font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-yellow-400 text-lg leading-snug">
                           {module.title}
                         </h3>
-                        <p className="text-sm text-gray-500 mt-2 line-clamp-2">
+                        <p className="text-sm text-gray-500 dark:text-slate-400 mt-2 line-clamp-2">
                           {module.description}
                         </p>
                       </div>
                     </div>
 
                     {/* Footer Row */}
-                    <div className="px-6 py-4 border-t border-gray-50 bg-gray-50/30 rounded-b-xl flex items-center justify-between">
-                      <span className="text-xs text-gray-400 flex items-center">
-                        <Clock className="w-3.5 h-3.5 mr-1 text-gray-400" />
+                    <div className="px-6 py-4 border-t border-gray-50 dark:border-slate-800 bg-gray-50/30 dark:bg-slate-800/40 rounded-b-xl flex items-center justify-between">
+                      <span className="text-xs text-gray-400 dark:text-slate-400 flex items-center">
+                        <Clock className="w-3.5 h-3.5 mr-1 text-gray-400 dark:text-slate-400" />
                         {module.readTime}
                       </span>
                       
                       <button
                         onClick={() => setActiveModule(module)}
-                        className={`text-xs font-bold px-4 py-2 rounded-lg transition-colors shadow-sm ${
+                        className={`text-xs font-bold px-4 py-2 rounded-lg transition-colors shadow-sm cursor-pointer ${
                           isFinished 
-                            ? "bg-white border border-emerald-200 text-emerald-700 hover:bg-emerald-50"
-                            : "bg-blue-900 text-white hover:bg-blue-850"
+                            ? "bg-white dark:bg-slate-800 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-50 dark:hover:bg-slate-700"
+                            : "bg-blue-900 dark:bg-indigo-600 text-white hover:bg-blue-850 dark:hover:bg-indigo-500"
                         }`}
                       >
                         {isFinished ? "Review Guide" : "Start Learning"}

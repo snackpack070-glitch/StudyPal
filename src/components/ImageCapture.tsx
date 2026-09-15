@@ -156,14 +156,13 @@ export default function ImageCapture({ onNewScan }: ImageCaptureProps) {
   }, []);
 
   return (
-    <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm col-span-1 md:col-span-2 lg:col-span-3">
+    <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-gray-100 dark:border-slate-800 shadow-sm col-span-1 md:col-span-2 lg:col-span-3 transition-colors duration-200">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-semibold text-gray-900">Scan & Solve</h2>
-
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Scan & Solve</h2>
       </div>
 
       {errorMsg && !isCameraOpen && !previewImage && (
-        <div className="mb-4 p-3 bg-red-50 text-red-600 rounded-lg text-sm font-medium">
+        <div className="mb-4 p-3 bg-red-50 dark:bg-red-950/50 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900/50 rounded-lg text-sm font-medium">
           {errorMsg}
         </div>
       )}
@@ -173,26 +172,28 @@ export default function ImageCapture({ onNewScan }: ImageCaptureProps) {
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         className={`border-2 border-dashed rounded-xl p-8 flex flex-col items-center justify-center transition-colors ${
-          isDragging ? 'border-yellow-500 bg-yellow-100' : 'border-yellow-200 hover:border-yellow-400 bg-yellow-50/50'
+          isDragging 
+            ? 'border-yellow-500 bg-yellow-100 dark:bg-yellow-950/40' 
+            : 'border-yellow-200 dark:border-slate-700 hover:border-yellow-400 dark:hover:border-yellow-500 bg-yellow-50/50 dark:bg-slate-800/40'
         }`}
       >
-        <div className="bg-white p-4 rounded-full shadow-sm mb-4 border border-yellow-100">
-          <ImageIcon className="w-8 h-8 text-yellow-600" />
+        <div className="bg-white dark:bg-slate-800 p-4 rounded-full shadow-sm mb-4 border border-yellow-100 dark:border-slate-700">
+          <ImageIcon className="w-8 h-8 text-yellow-600 dark:text-yellow-400" />
         </div>
-        <p className="text-gray-800 font-semibold mb-1">Upload a problem to solve</p>
-        <p className="text-gray-500 text-sm mb-6">Drag and drop, or choose an option below</p>
+        <p className="text-gray-800 dark:text-slate-100 font-semibold mb-1">Upload a problem to solve</p>
+        <p className="text-gray-500 dark:text-slate-400 text-sm mb-6">Drag and drop, or choose an option below</p>
 
         <div className="flex flex-wrap justify-center gap-4">
           <button
             onClick={() => fileInputRef.current?.click()}
-            className="flex items-center space-x-2 px-5 py-2.5 bg-white border border-gray-200 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium shadow-sm"
+            className="flex items-center space-x-2 px-5 py-2.5 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-slate-200 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors font-medium shadow-sm cursor-pointer"
           >
-            <Upload className="w-5 h-5 text-yellow-600" />
+            <Upload className="w-5 h-5 text-yellow-600 dark:text-yellow-400" />
             <span>Upload Image</span>
           </button>
           <button
             onClick={startCamera}
-            className="flex items-center space-x-2 px-5 py-2.5 bg-blue-900 text-white rounded-lg hover:bg-blue-800 transition-colors font-medium shadow-sm"
+            className="flex items-center space-x-2 px-5 py-2.5 bg-blue-900 dark:bg-indigo-600 text-white rounded-lg hover:bg-blue-800 dark:hover:bg-indigo-500 transition-colors font-medium shadow-sm cursor-pointer"
           >
             <Camera className="w-5 h-5 text-yellow-400" />
             <span>Scan with Camera</span>
@@ -213,7 +214,7 @@ export default function ImageCapture({ onNewScan }: ImageCaptureProps) {
           <div className="bg-gray-900 rounded-2xl overflow-hidden max-w-lg w-full border border-gray-800 shadow-2xl">
             <div className="p-4 flex justify-between items-center border-b border-gray-800 bg-gray-900">
               <h3 className="text-lg font-semibold text-white">Camera Scanner</h3>
-              <button onClick={stopCamera} className="p-1.5 hover:bg-gray-800 rounded-full text-gray-400 hover:text-white transition-colors">
+              <button onClick={stopCamera} className="p-1.5 hover:bg-gray-800 rounded-full text-gray-400 hover:text-white transition-colors cursor-pointer">
                 <X className="w-6 h-6" />
               </button>
             </div>
@@ -237,7 +238,7 @@ export default function ImageCapture({ onNewScan }: ImageCaptureProps) {
               <button 
                 onClick={capturePhoto}
                 disabled={!!errorMsg}
-                className="w-16 h-16 bg-white rounded-full border-4 border-gray-400 hover:scale-105 active:scale-95 transition-transform disabled:opacity-50 disabled:hover:scale-100"
+                className="w-16 h-16 bg-white rounded-full border-4 border-gray-400 hover:scale-105 active:scale-95 transition-transform disabled:opacity-50 disabled:hover:scale-100 cursor-pointer"
                 aria-label="Take photo"
               />
             </div>
@@ -248,9 +249,9 @@ export default function ImageCapture({ onNewScan }: ImageCaptureProps) {
       {/* Image Preview & Analysis Modal */}
       {previewImage && (
         <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl overflow-hidden max-w-4xl w-full shadow-2xl flex flex-col max-h-[95vh] md:max-h-[90vh]">
-            <div className="p-4 flex justify-between items-center border-b">
-              <h3 className="text-lg font-semibold text-gray-900">
+          <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded-2xl overflow-hidden max-w-4xl w-full shadow-2xl flex flex-col max-h-[95vh] md:max-h-[90vh]">
+            <div className="p-4 flex justify-between items-center border-b border-gray-200 dark:border-slate-800">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                 {analysisResult ? 'Solution & Insights' : 'Review Image'}
               </h3>
               <button 
@@ -258,42 +259,42 @@ export default function ImageCapture({ onNewScan }: ImageCaptureProps) {
                   setPreviewImage(null);
                   setAnalysisResult(null);
                 }} 
-                className="p-1.5 hover:bg-gray-100 rounded-full text-gray-500 transition-colors"
+                className="p-1.5 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-full text-gray-500 dark:text-slate-400 transition-colors cursor-pointer"
               >
                 <X className="w-6 h-6" />
               </button>
             </div>
             
-            <div className={`p-4 bg-gray-50 flex-1 overflow-auto flex ${analysisResult ? 'flex-col md:flex-row gap-6' : 'flex-col justify-center items-center'} min-h-[300px]`}>
+            <div className={`p-4 bg-gray-50 dark:bg-slate-950 flex-1 overflow-auto flex ${analysisResult ? 'flex-col md:flex-row gap-6' : 'flex-col justify-center items-center'} min-h-[300px]`}>
               <div className={`flex flex-col items-center ${analysisResult ? 'md:w-1/3' : 'w-full'}`}>
                 <img 
                   src={previewImage} 
                   alt="Captured content" 
-                  className="max-h-[50vh] max-w-full object-contain rounded-lg shadow-sm border border-gray-200 bg-white"
+                  className="max-h-[50vh] max-w-full object-contain rounded-lg shadow-sm border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900"
                 />
                 
                 {errorMsg && !analysisResult && (
-                  <div className="mt-4 p-3 bg-red-50 text-red-600 rounded-lg text-sm font-medium w-full text-center">
+                  <div className="mt-4 p-3 bg-red-50 dark:bg-red-950/50 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900/50 rounded-lg text-sm font-medium w-full text-center">
                     {errorMsg}
                   </div>
                 )}
               </div>
               
               {analysisResult && (
-                <div className="md:w-2/3 bg-white p-6 rounded-xl border border-gray-200 shadow-sm overflow-y-auto">
-                  <div className="prose prose-blue max-w-none prose-sm sm:prose-base markdown-body">
+                <div className="md:w-2/3 bg-white dark:bg-slate-900 p-6 rounded-xl border border-gray-200 dark:border-slate-800 shadow-sm overflow-y-auto">
+                  <div className="prose prose-blue dark:prose-invert max-w-none prose-sm sm:prose-base markdown-body text-slate-800 dark:text-slate-200">
                     <Markdown>{analysisResult}</Markdown>
                   </div>
                 </div>
               )}
             </div>
             
-            <div className="p-4 border-t bg-white flex justify-end space-x-3 mt-auto">
+            <div className="p-4 border-t border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex justify-end space-x-3 mt-auto">
               {!analysisResult && (
                 <>
                   <button 
                     onClick={() => setPreviewImage(null)}
-                    className="px-5 py-2.5 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors font-medium"
+                    className="px-5 py-2.5 text-gray-600 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg transition-colors font-medium cursor-pointer"
                     disabled={isAnalyzing}
                   >
                     Discard
@@ -301,7 +302,7 @@ export default function ImageCapture({ onNewScan }: ImageCaptureProps) {
                   <button 
                     onClick={analyzeImage}
                     disabled={isAnalyzing}
-                    className="flex items-center justify-center min-w-[140px] px-5 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-sm disabled:opacity-70"
+                    className="flex items-center justify-center min-w-[140px] px-5 py-2.5 bg-blue-600 dark:bg-indigo-600 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-indigo-500 transition-colors font-medium shadow-sm disabled:opacity-70 cursor-pointer"
                   >
                     {isAnalyzing ? (
                       <>
@@ -320,7 +321,7 @@ export default function ImageCapture({ onNewScan }: ImageCaptureProps) {
                     setPreviewImage(null);
                     setAnalysisResult(null);
                   }}
-                  className="px-5 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-sm"
+                  className="px-5 py-2.5 bg-blue-600 dark:bg-indigo-600 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-indigo-500 transition-colors font-medium shadow-sm cursor-pointer"
                 >
                   Done
                 </button>
