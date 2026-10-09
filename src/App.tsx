@@ -25,6 +25,8 @@ import LandingPage from './components/LandingPage';
 import AuthModal from './components/AuthModal';
 import LegalModal, { LegalTab } from './components/LegalModal';
 import ThemeToggle from './components/ThemeToggle';
+import SocialShare from './components/SocialShare';
+import StudyPalLogo from './components/StudyPalLogo';
 import { ScannedItem } from './types';
 import { 
   auth, 
@@ -258,17 +260,22 @@ export default function App() {
 
       {/* Mobile Header */}
       <div className="md:hidden bg-blue-950 dark:bg-slate-900 border-b border-blue-900 dark:border-slate-800 p-4 flex items-center justify-between shadow-sm z-10">
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2.5">
           <button
             onClick={() => setView('landing')}
-            className="text-xs font-bold text-blue-200 hover:text-white flex items-center space-x-1 cursor-pointer"
+            className="text-xs font-bold text-blue-200 hover:text-white flex items-center space-x-1 px-2 py-1.5 rounded-lg bg-blue-900/60 dark:bg-slate-800 border border-blue-800 dark:border-slate-700 cursor-pointer"
+            title="Go to Home"
           >
-            <Home className="w-4 h-4 text-yellow-400" />
+            <Home className="w-3.5 h-3.5 text-yellow-400" />
+            <span className="text-yellow-300 font-extrabold text-[11px]">Home</span>
           </button>
-          <h1 className="text-xl font-bold text-yellow-400 tracking-tight">StudyPal</h1>
+          <div onClick={() => setView('landing')} className="cursor-pointer">
+            <StudyPalLogo size="sm" showText={true} />
+          </div>
         </div>
 
-        <div className="flex items-center space-x-2 sm:space-x-3">
+        <div className="flex items-center space-x-2">
+          <SocialShare variant="dropdown" />
           <ThemeToggle variant="button" />
           
           <button
@@ -301,11 +308,8 @@ export default function App() {
       {/* Desktop Sidebar */}
       <nav className="hidden md:flex w-64 bg-blue-950 dark:bg-slate-900 border-r border-blue-900 dark:border-slate-800 flex-col z-10 transition-colors duration-200">
         <div className="p-6 pb-4 flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 rounded-lg bg-yellow-400 flex items-center justify-center text-blue-950 font-black text-lg">
-              S
-            </div>
-            <h1 className="text-2xl font-bold text-yellow-400 tracking-tight">StudyPal</h1>
+          <div onClick={() => setView('landing')} className="cursor-pointer" title="Go to Home">
+            <StudyPalLogo size="md" showText={true} />
           </div>
           <button
             onClick={() => setView('landing')}
@@ -368,7 +372,16 @@ export default function App() {
         </div>
 
         {/* Navigation Items */}
-        <div className="flex-1 px-4 space-y-2">
+        <div className="flex-1 px-4 space-y-1.5">
+          {/* Home button in sidebar navigation list */}
+          <button
+            onClick={() => setView('landing')}
+            className="w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-colors cursor-pointer text-blue-200 dark:text-slate-300 hover:bg-blue-900/60 dark:hover:bg-slate-800 hover:text-white group"
+          >
+            <Home className="w-5 h-5 text-yellow-400 group-hover:scale-110 transition-transform" />
+            <span className="font-semibold">Home</span>
+          </button>
+
           {navItems.map((item) => (
             <button
               key={item.id}
@@ -386,7 +399,17 @@ export default function App() {
         </div>
 
         {/* Footer info & legal links */}
-        <div className="p-4 border-t border-blue-900/60 dark:border-slate-800 text-center space-y-2">
+        <div className="p-4 border-t border-blue-900/60 dark:border-slate-800 text-center space-y-2.5">
+          {/* Quick Social Share Bar in Desktop Sidebar */}
+          <div className="bg-blue-900/40 dark:bg-slate-800/60 p-2.5 rounded-xl border border-blue-800/60 dark:border-slate-700/60">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-yellow-400 mb-1.5 flex items-center justify-center space-x-1">
+              <span>Share StudyPal</span>
+            </p>
+            <div className="flex items-center justify-center">
+              <SocialShare variant="dropdown" />
+            </div>
+          </div>
+
           <button
             onClick={() => setView('landing')}
             className="text-xs text-blue-300 dark:text-slate-300 hover:text-yellow-400 flex items-center justify-center space-x-1.5 w-full py-1.5 hover:bg-blue-900/40 dark:hover:bg-slate-800 rounded-lg cursor-pointer transition-colors"
@@ -422,11 +445,20 @@ export default function App() {
 
       {/* Mobile Bottom Navigation */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-blue-950 dark:bg-slate-900 border-t border-blue-900 dark:border-slate-800 flex justify-around p-2 pb-safe z-10">
+        {/* Mobile Home button */}
+        <button
+          onClick={() => setView('landing')}
+          className="flex flex-col items-center justify-center p-2 min-w-[56px] rounded-lg transition-colors cursor-pointer text-blue-300 dark:text-slate-400 hover:bg-blue-900/40 dark:hover:bg-slate-800"
+        >
+          <Home className="w-6 h-6 mb-1 text-yellow-400" />
+          <span className="text-[10px] font-bold text-yellow-400">Home</span>
+        </button>
+
         {navItems.map((item) => (
           <button
             key={item.id}
             onClick={() => setActiveTab(item.id)}
-            className={`flex flex-col items-center justify-center p-2 min-w-[64px] rounded-lg transition-colors cursor-pointer ${
+            className={`flex flex-col items-center justify-center p-2 min-w-[56px] rounded-lg transition-colors cursor-pointer ${
               activeTab === item.id ? 'text-yellow-400' : 'text-blue-300 dark:text-slate-400 hover:bg-blue-900/40 dark:hover:bg-slate-800'
             }`}
           >

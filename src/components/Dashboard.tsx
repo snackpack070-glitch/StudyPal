@@ -3,6 +3,7 @@ import { LayoutDashboard, BookOpen, Clock, Zap, ArrowRight, Brain, Trophy } from
 import ImageCapture from "./ImageCapture";
 import { ScannedItem } from "../types";
 import AdSenseBanner from "./AdSenseBanner";
+import WeeklyProgressChart from "./WeeklyProgressChart";
 
 interface DashboardProps {
   historyList: ScannedItem[];
@@ -200,8 +201,13 @@ export default function Dashboard({ historyList, onNewScan, onViewItem, onNaviga
         </div>
       </div>
 
+      {/* Weekly Progress Chart Section */}
+      <div className="w-full">
+        <WeeklyProgressChart historyList={historyList} onNavigateToTab={onNavigateToTab} />
+      </div>
+
       {/* Bottom AdSense Banner */}
-      <div className="w-full pt-4">
+      <div className="w-full pt-2">
         <AdSenseBanner client="ca-pub-8350207430692592" slot="1234567890" format="horizontal" responsive={true} />
       </div>
     </div>

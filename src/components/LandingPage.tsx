@@ -14,12 +14,15 @@ import {
   FileSearch,
   Sparkle,
   ShoppingCart,
-  ExternalLink
+  ExternalLink,
+  Home
 } from 'lucide-react';
 import { User } from 'firebase/auth';
 import AdSenseBanner from './AdSenseBanner';
 import ScanToPayQRCode from './ScanToPayQRCode';
 import ThemeToggle from './ThemeToggle';
+import SocialShare from './SocialShare';
+import StudyPalLogo from './StudyPalLogo';
 
 interface LandingPageProps {
   user: User | null;
@@ -40,14 +43,24 @@ export default function LandingPage({
     <div className="min-h-screen bg-gradient-to-b from-slate-50 via-sky-50/50 to-slate-100 dark:from-blue-950 dark:via-blue-900 dark:to-slate-900 text-slate-900 dark:text-white flex flex-col transition-colors duration-300">
       {/* Header / Nav */}
       <header className="max-w-6xl mx-auto w-full px-4 sm:px-6 py-5 sm:py-6 flex items-center justify-between border-b border-slate-200/60 dark:border-blue-900/40">
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 rounded-xl bg-yellow-400 flex items-center justify-center text-blue-950 font-black text-xl shadow-md">
-            S
-          </div>
-          <span className="text-2xl font-black text-blue-950 dark:text-yellow-400 tracking-tight">StudyPal</span>
-        </div>
+        <StudyPalLogo size="md" />
 
         <div className="flex items-center space-x-2 sm:space-x-3">
+          {/* Home navigation button */}
+          <button
+            onClick={() => {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            className="text-xs sm:text-sm font-bold text-slate-700 dark:text-blue-100 hover:text-blue-950 dark:hover:text-yellow-400 flex items-center space-x-1.5 px-3 py-2 rounded-xl hover:bg-slate-200/50 dark:hover:bg-blue-900/40 transition-colors cursor-pointer"
+            title="Go to Home"
+          >
+            <Home className="w-4 h-4 text-yellow-500" />
+            <span className="hidden sm:inline">Home</span>
+          </button>
+
+          {/* Social Share dropdown in header */}
+          <SocialShare variant="dropdown" />
+
           {/* Theme Toggle in Header */}
           <ThemeToggle variant="pill" showLabels={true} className="hidden sm:inline-flex" />
           <ThemeToggle variant="button" className="sm:hidden" />
@@ -253,8 +266,13 @@ export default function LandingPage({
           </div>
         </div>
 
+        {/* Social Share Banner across top platforms */}
+        <div className="mt-8 w-full max-w-xl">
+          <SocialShare variant="bar" />
+        </div>
+
         {/* Instructions & Security Badges */}
-        <div className="mt-12 flex flex-wrap justify-center items-center gap-6 text-xs text-slate-500 dark:text-blue-300">
+        <div className="mt-8 flex flex-wrap justify-center items-center gap-6 text-xs text-slate-500 dark:text-blue-300">
           <div className="flex items-center space-x-1.5">
             <ShieldCheck className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
             <span>Secure Firebase Authentication</span>
@@ -278,8 +296,8 @@ export default function LandingPage({
       {/* Footer */}
       <footer className="border-t border-slate-200 dark:border-blue-900/80 py-8 px-6 text-xs text-slate-500 dark:text-blue-300 bg-slate-50/50 dark:bg-transparent">
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex flex-col sm:flex-row items-center sm:space-x-2 text-center sm:text-left gap-1 sm:gap-0">
-            <span className="font-bold text-blue-950 dark:text-yellow-400">StudyPal</span>
+          <div className="flex flex-col sm:flex-row items-center sm:space-x-2 text-center sm:text-left gap-1 sm:gap-2">
+            <StudyPalLogo size="sm" showText={true} />
             <span className="text-slate-500 dark:text-blue-400">© 2026 AI Learning Assistant. Built with Google AI Studio & Firebase.</span>
           </div>
 
