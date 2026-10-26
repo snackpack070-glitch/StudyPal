@@ -2,6 +2,7 @@ import { useState } from "react";
 import { History as HistoryIcon, Search, Trash2, Calendar, FileText, ChevronRight, X } from "lucide-react";
 import { ScannedItem } from "../types";
 import Markdown from "react-markdown";
+import AdSenseBanner from "./AdSenseBanner";
 
 interface HistoryProps {
   historyList: ScannedItem[];
@@ -225,6 +226,11 @@ export default function History({ historyList, selectedItem, onSelectItem, onDel
           </div>
         </div>
       )}
+
+      {/* AdSense Unit */}
+      <div className="w-full pt-4">
+        <AdSenseBanner client="ca-pub-8350207430692592" format="horizontal" responsive={true} />
+      </div>
     </div>
   );
 }

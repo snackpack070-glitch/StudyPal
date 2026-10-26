@@ -4,12 +4,13 @@ import ImageCapture from "./ImageCapture";
 import { ScannedItem } from "../types";
 import AdSenseBanner from "./AdSenseBanner";
 import WeeklyProgressChart from "./WeeklyProgressChart";
+import FocusTimer from "./FocusTimer";
 
 interface DashboardProps {
   historyList: ScannedItem[];
   onNewScan: (item: ScannedItem) => void;
   onViewItem: (item: ScannedItem) => void;
-  onNavigateToTab: (tab: 'dashboard' | 'history' | 'learn' | 'quizzes') => void;
+  onNavigateToTab: (tab: 'dashboard' | 'history' | 'learn' | 'quizzes' | 'buy') => void;
 }
 
 export default function Dashboard({ historyList, onNewScan, onViewItem, onNavigateToTab }: DashboardProps) {
@@ -201,9 +202,14 @@ export default function Dashboard({ historyList, onNewScan, onViewItem, onNaviga
         </div>
       </div>
 
-      {/* Weekly Progress Chart Section */}
-      <div className="w-full">
-        <WeeklyProgressChart historyList={historyList} onNavigateToTab={onNavigateToTab} />
+      {/* Study Analytics & Focus Tools */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2">
+          <WeeklyProgressChart historyList={historyList} onNavigateToTab={onNavigateToTab} />
+        </div>
+        <div className="lg:col-span-1">
+          <FocusTimer />
+        </div>
       </div>
 
       {/* Bottom AdSense Banner */}

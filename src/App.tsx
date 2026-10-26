@@ -15,17 +15,20 @@ import {
   CloudOff, 
   Home, 
   Sparkles,
-  User as UserIcon
+  User as UserIcon,
+  ShoppingCart
 } from 'lucide-react';
 import Dashboard from './components/Dashboard';
 import HistoryView from './components/History';
 import Learn from './components/Learn';
 import Quizzes from './components/Quizzes';
+import BuyPage from './components/BuyPage';
 import LandingPage from './components/LandingPage';
 import AuthModal from './components/AuthModal';
 import LegalModal, { LegalTab } from './components/LegalModal';
+import AboutModal from './components/AboutModal';
+import ContactModal from './components/ContactModal';
 import ThemeToggle from './components/ThemeToggle';
-import SocialShare from './components/SocialShare';
 import StudyPalLogo from './components/StudyPalLogo';
 import { ScannedItem } from './types';
 import { 
@@ -39,7 +42,7 @@ import {
   deleteFirestoreHistoryItem
 } from './lib/firebase';
 
-type Tab = 'dashboard' | 'history' | 'learn' | 'quizzes';
+type Tab = 'dashboard' | 'history' | 'learn' | 'quizzes' | 'buy';
 
 export default function App() {
   const [user, setUser] = useState<User | null>(null);
@@ -60,6 +63,10 @@ export default function App() {
   // Legal modal states
   const [legalModalOpen, setLegalModalOpen] = useState(false);
   const [legalModalTab, setLegalModalTab] = useState<LegalTab>('terms');
+
+  // About and Contact modal states
+  const [aboutModalOpen, setAboutModalOpen] = useState(false);
+  const [contactModalOpen, setContactModalOpen] = useState(false);
 
   const handleOpenLegal = (tab: LegalTab = 'terms') => {
     setLegalModalTab(tab);
@@ -177,6 +184,7 @@ export default function App() {
     { id: 'history', label: 'History', icon: History },
     { id: 'learn', label: 'Learn', icon: BookOpen },
     { id: 'quizzes', label: 'Quizzes', icon: HelpCircle },
+    { id: 'buy', label: 'Buy StudyPal', icon: ShoppingCart },
   ] as const;
 
   // Render Landing Page view if user clicked Landing or has set view to 'landing'
@@ -189,6 +197,8 @@ export default function App() {
           onEnterApp={() => setView('app')}
           onSignOut={handleSignOut}
           onOpenLegal={handleOpenLegal}
+          onOpenAbout={() => setAboutModalOpen(true)}
+          onOpenContact={() => setContactModalOpen(true)}
         />
         <AuthModal
           isOpen={authModalOpen}
@@ -201,6 +211,16 @@ export default function App() {
           isOpen={legalModalOpen}
           initialTab={legalModalTab}
           onClose={() => setLegalModalOpen(false)}
+        />
+        <AboutModal
+          isOpen={aboutModalOpen}
+          onClose={() => setAboutModalOpen(false)}
+          onOpenContact={() => setContactModalOpen(true)}
+        />
+        <ContactModal
+          isOpen={contactModalOpen}
+          onClose={() => setContactModalOpen(false)}
+          user={user}
         />
       </>
     );
@@ -229,6 +249,7 @@ export default function App() {
         );
       case 'learn': return <Learn />;
       case 'quizzes': return <Quizzes />;
+      case 'buy': return <BuyPage onOpenContact={() => setContactModalOpen(true)} />;
       default: return (
         <Dashboard 
           historyList={historyList} 
@@ -258,6 +279,20 @@ export default function App() {
         onClose={() => setLegalModalOpen(false)}
       />
 
+      {/* About Modal */}
+      <AboutModal
+        isOpen={aboutModalOpen}
+        onClose={() => setAboutModalOpen(false)}
+        onOpenContact={() => setContactModalOpen(true)}
+      />
+
+      {/* Contact Modal */}
+      <ContactModal
+        isOpen={contactModalOpen}
+        onClose={() => setContactModalOpen(false)}
+        user={user}
+      />
+
       {/* Mobile Header */}
       <div className="md:hidden bg-blue-950 dark:bg-slate-900 border-b border-blue-900 dark:border-slate-800 p-4 flex items-center justify-between shadow-sm z-10">
         <div className="flex items-center space-x-2.5">
@@ -275,13 +310,28 @@ export default function App() {
         </div>
 
         <div className="flex items-center space-x-2">
-          <SocialShare variant="dropdown" />
           <ThemeToggle variant="button" />
+
+          <button
+            onClick={() => setAboutModalOpen(true)}
+            title="About the Creator"
+            className="text-xs text-blue-300 hover:text-yellow-400 font-medium px-1.5 py-1 rounded hover:bg-blue-900/50 cursor-pointer"
+          >
+            About
+          </button>
+
+          <button
+            onClick={() => setContactModalOpen(true)}
+            title="Contact"
+            className="text-xs text-blue-300 hover:text-yellow-400 font-medium px-1.5 py-1 rounded hover:bg-blue-900/50 cursor-pointer"
+          >
+            Contact
+          </button>
           
           <button
             onClick={() => handleOpenLegal('terms')}
             title="Terms & Privacy"
-            className="text-xs text-blue-300 hover:text-yellow-400 font-medium px-2 py-1 rounded hover:bg-blue-900/50 cursor-pointer"
+            className="text-xs text-blue-300 hover:text-yellow-400 font-medium px-1.5 py-1 rounded hover:bg-blue-900/50 cursor-pointer"
           >
             Legal
           </button>
@@ -400,16 +450,6 @@ export default function App() {
 
         {/* Footer info & legal links */}
         <div className="p-4 border-t border-blue-900/60 dark:border-slate-800 text-center space-y-2.5">
-          {/* Quick Social Share Bar in Desktop Sidebar */}
-          <div className="bg-blue-900/40 dark:bg-slate-800/60 p-2.5 rounded-xl border border-blue-800/60 dark:border-slate-700/60">
-            <p className="text-[10px] font-bold uppercase tracking-wider text-yellow-400 mb-1.5 flex items-center justify-center space-x-1">
-              <span>Share StudyPal</span>
-            </p>
-            <div className="flex items-center justify-center">
-              <SocialShare variant="dropdown" />
-            </div>
-          </div>
-
           <button
             onClick={() => setView('landing')}
             className="text-xs text-blue-300 dark:text-slate-300 hover:text-yellow-400 flex items-center justify-center space-x-1.5 w-full py-1.5 hover:bg-blue-900/40 dark:hover:bg-slate-800 rounded-lg cursor-pointer transition-colors"
@@ -418,7 +458,23 @@ export default function App() {
             <span>Landing Page & Info</span>
           </button>
 
-          <div className="flex items-center justify-center space-x-2 text-[11px] text-blue-300/80 dark:text-slate-400 pt-1 border-t border-blue-900/40 dark:border-slate-800">
+          <div className="flex items-center justify-center space-x-2 text-[11px] text-blue-300 dark:text-slate-300 pt-1 border-t border-blue-900/40 dark:border-slate-800">
+            <button
+              onClick={() => setAboutModalOpen(true)}
+              className="hover:text-yellow-400 transition-colors cursor-pointer font-semibold"
+            >
+              About Me
+            </button>
+            <span className="text-blue-700 dark:text-slate-600">•</span>
+            <button
+              onClick={() => setContactModalOpen(true)}
+              className="hover:text-yellow-400 transition-colors cursor-pointer font-semibold"
+            >
+              Contact
+            </button>
+          </div>
+
+          <div className="flex items-center justify-center space-x-2 text-[10px] text-blue-400/70 dark:text-slate-400">
             <button
               onClick={() => handleOpenLegal('terms')}
               className="hover:text-yellow-400 transition-colors cursor-pointer"

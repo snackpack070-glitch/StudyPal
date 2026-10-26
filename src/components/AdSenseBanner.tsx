@@ -33,27 +33,29 @@ export default function AdSenseBanner({
   useEffect(() => {
     try {
       if (typeof window !== 'undefined' && adRef.current) {
-        // Push ad unit to Google AdSense queue
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-        setAdPushed(true);
+        // Prevent duplicate push error in React re-renders
+        if (!adRef.current.getAttribute('data-adsbygoogle-status')) {
+          (window.adsbygoogle = window.adsbygoogle || []).push({});
+          setAdPushed(true);
+        }
       }
     } catch (err) {
-      console.warn('AdSense script error or adblocker detected:', err);
+      console.warn('AdSense notice or adblocker detected:', err);
       setAdError(true);
     }
   }, []);
 
   return (
     <div className={`my-4 flex flex-col items-center justify-center w-full overflow-hidden ${className}`}>
-      <div className="w-full flex items-center justify-between text-[10px] font-bold text-gray-400 uppercase tracking-widest px-2 mb-1">
+      <div className="w-full flex items-center justify-between text-[10px] font-bold text-gray-400 dark:text-slate-500 uppercase tracking-widest px-2 mb-1">
         <span>{label}</span>
-        <span className="flex items-center space-x-1 text-[9px] text-gray-400 font-normal">
+        <span className="flex items-center space-x-1 text-[9px] text-gray-400 dark:text-slate-500 font-normal">
           <Info className="w-2.5 h-2.5" />
           <span>Google AdSense</span>
         </span>
       </div>
 
-      <div className="w-full bg-gray-50 border border-gray-200/80 rounded-2xl p-2 min-h-[90px] flex items-center justify-center relative overflow-hidden">
+      <div className="w-full bg-gray-50 dark:bg-slate-900/60 border border-gray-200/80 dark:border-slate-800 rounded-2xl p-2 min-h-[90px] flex items-center justify-center relative overflow-hidden">
         {/* AdSense Unit */}
         <ins
           ref={adRef}
@@ -73,10 +75,10 @@ export default function AdSenseBanner({
 
         {/* Development / Container Fallback Notice when ads are loading or domain is pending AdSense approval */}
         {adError && (
-          <div className="text-center p-3 text-xs text-gray-500 bg-gray-100/80 rounded-xl w-full">
-            <p className="font-semibold text-gray-700">Google AdSense Unit Ready</p>
-            <p className="text-[11px] text-gray-500 mt-0.5">
-              Publisher Client: <code className="bg-gray-200 px-1 py-0.5 rounded text-gray-800 font-mono text-[10px]">{client}</code>
+          <div className="text-center p-3 text-xs text-gray-500 dark:text-slate-400 bg-gray-100/80 dark:bg-slate-800/80 rounded-xl w-full">
+            <p className="font-semibold text-gray-700 dark:text-slate-200">Google AdSense Unit Ready</p>
+            <p className="text-[11px] text-gray-500 dark:text-slate-400 mt-0.5">
+              Publisher Client: <code className="bg-gray-200 dark:bg-slate-700 px-1 py-0.5 rounded text-gray-800 dark:text-yellow-400 font-mono text-[10px]">{client}</code>
             </p>
           </div>
         )}

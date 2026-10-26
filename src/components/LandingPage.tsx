@@ -15,7 +15,9 @@ import {
   Sparkle,
   ShoppingCart,
   ExternalLink,
-  Home
+  Home,
+  User as UserIcon,
+  Mail
 } from 'lucide-react';
 import { User } from 'firebase/auth';
 import AdSenseBanner from './AdSenseBanner';
@@ -30,6 +32,8 @@ interface LandingPageProps {
   onEnterApp: () => void;
   onSignOut: () => void;
   onOpenLegal?: (tab: 'terms' | 'privacy') => void;
+  onOpenAbout?: () => void;
+  onOpenContact?: () => void;
 }
 
 export default function LandingPage({
@@ -37,7 +41,9 @@ export default function LandingPage({
   onOpenAuth,
   onEnterApp,
   onSignOut,
-  onOpenLegal
+  onOpenLegal,
+  onOpenAbout,
+  onOpenContact
 }: LandingPageProps) {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 via-sky-50/50 to-slate-100 dark:from-blue-950 dark:via-blue-900 dark:to-slate-900 text-slate-900 dark:text-white flex flex-col transition-colors duration-300">
@@ -58,22 +64,31 @@ export default function LandingPage({
             <span className="hidden sm:inline">Home</span>
           </button>
 
-          {/* Social Share dropdown in header */}
-          <SocialShare variant="dropdown" />
+          {/* About Me navigation button */}
+          <button
+            onClick={onOpenAbout}
+            id="nav-about-button"
+            className="text-xs sm:text-sm font-bold text-slate-700 dark:text-blue-100 hover:text-blue-950 dark:hover:text-yellow-400 flex items-center space-x-1.5 px-3 py-2 rounded-xl hover:bg-slate-200/50 dark:hover:bg-blue-900/40 transition-colors cursor-pointer"
+            title="About the Creator"
+          >
+            <UserIcon className="w-4 h-4 text-blue-500 dark:text-yellow-400" />
+            <span>About Me</span>
+          </button>
+
+          {/* Contact navigation button */}
+          <button
+            onClick={onOpenContact}
+            id="nav-contact-button"
+            className="text-xs sm:text-sm font-bold text-slate-700 dark:text-blue-100 hover:text-blue-950 dark:hover:text-yellow-400 flex items-center space-x-1.5 px-3 py-2 rounded-xl hover:bg-slate-200/50 dark:hover:bg-blue-900/40 transition-colors cursor-pointer"
+            title="Contact StudyPal"
+          >
+            <Mail className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
+            <span>Contact</span>
+          </button>
 
           {/* Theme Toggle in Header */}
-          <ThemeToggle variant="pill" showLabels={true} className="hidden sm:inline-flex" />
-          <ThemeToggle variant="button" className="sm:hidden" />
-
-          <a
-            href="https://tinyurl.com/jcr8d7ak"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs sm:text-sm font-bold text-emerald-700 dark:text-emerald-300 hover:text-emerald-800 dark:hover:text-emerald-200 flex items-center space-x-1.5 px-3 py-2 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-500/40 rounded-xl transition-all hover:scale-105 cursor-pointer shadow-xs"
-          >
-            <ShoppingCart className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-            <span>Buy</span>
-          </a>
+          <ThemeToggle variant="pill" showLabels={true} className="hidden md:inline-flex" />
+          <ThemeToggle variant="button" className="md:hidden" />
 
           {user ? (
             <div className="flex items-center space-x-3 bg-blue-50 dark:bg-blue-900/80 border border-blue-200 dark:border-blue-700/60 rounded-full py-1.5 px-4 shadow-xs">
@@ -129,45 +144,24 @@ export default function LandingPage({
         </p>
 
         {/* Action Buttons */}
-        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-xl">
+        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-md">
           <button
             onClick={onEnterApp}
-            className="w-full sm:w-auto px-7 py-4 bg-yellow-400 hover:bg-yellow-300 text-blue-950 font-black text-base rounded-2xl shadow-xl transition-all duration-200 flex items-center justify-center space-x-2 group cursor-pointer hover:scale-105"
+            className="w-full sm:w-auto px-8 py-4 bg-yellow-400 hover:bg-yellow-300 text-blue-950 font-black text-base rounded-2xl shadow-xl transition-all duration-200 flex items-center justify-center space-x-2 group cursor-pointer hover:scale-105"
           >
             <span>Launch Workspace</span>
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </button>
 
-          <a
-            href="https://tinyurl.com/jcr8d7ak"
-            target="_blank"
-            rel="noopener noreferrer"
-            id="hero-buy-button"
-            className="w-full sm:w-auto px-7 py-4 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-base rounded-2xl shadow-xl transition-all duration-200 flex items-center justify-center space-x-2 cursor-pointer hover:scale-105"
-          >
-            <ShoppingCart className="w-5 h-5 text-slate-950" />
-            <span>Buy StudyPal</span>
-          </a>
-
           {!user && (
             <button
               onClick={() => onOpenAuth('signup')}
-              className="w-full sm:w-auto px-6 py-4 bg-white dark:bg-blue-900/60 hover:bg-slate-100 dark:hover:bg-blue-800/80 border border-slate-300 dark:border-blue-700/60 text-slate-800 dark:text-white font-bold text-base rounded-2xl transition-all duration-200 flex items-center justify-center space-x-2 cursor-pointer shadow-sm"
+              className="w-full sm:w-auto px-7 py-4 bg-white dark:bg-blue-900/60 hover:bg-slate-100 dark:hover:bg-blue-800/80 border border-slate-300 dark:border-blue-700/60 text-slate-800 dark:text-white font-bold text-base rounded-2xl transition-all duration-200 flex items-center justify-center space-x-2 cursor-pointer shadow-sm hover:scale-105"
             >
               <Lock className="w-4 h-4 text-yellow-500 dark:text-yellow-400" />
               <span>Sign Up</span>
             </button>
           )}
-        </div>
-
-        {/* QR Code Hero Section Card */}
-        <div className="mt-10 flex flex-col items-center">
-          <div className="text-center mb-3">
-            <span className="text-xs font-semibold uppercase tracking-wider text-yellow-700 dark:text-yellow-400/90">
-              Mobile Quick Checkout
-            </span>
-          </div>
-          <ScanToPayQRCode url="https://tinyurl.com/jcr8d7ak" />
         </div>
 
         {/* Feature Highlights Grid */}
@@ -287,6 +281,49 @@ export default function LandingPage({
           </div>
         </div>
 
+        {/* Buy StudyPal & QR Code Section - Last Section of Landing Page */}
+        <section id="buy-section" className="mt-14 w-full max-w-4xl bg-gradient-to-br from-white via-emerald-50/40 to-slate-50 dark:from-slate-900 dark:via-blue-950/40 dark:to-slate-900 border border-emerald-300/60 dark:border-emerald-600/40 rounded-3xl p-6 sm:p-10 shadow-xl relative overflow-hidden text-left">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-400/10 rounded-full blur-3xl pointer-events-none" />
+          
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+            <div className="md:col-span-7 space-y-4">
+              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-700 dark:text-emerald-300 text-xs font-bold">
+                <Sparkles className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                <span>Lifetime Student Access</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+                Unlock StudyPal Premium
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-blue-200 leading-relaxed">
+                Get unlimited instant AI problem scans, detailed step-by-step reasoning, custom practice assessments, and persistent cloud sync across all your devices.
+              </p>
+              
+              <div className="pt-2">
+                <a
+                  href="https://tinyurl.com/jcr8d7ak"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  id="landing-buy-button"
+                  className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-8 py-4 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-base rounded-2xl shadow-xl transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95"
+                >
+                  <ShoppingCart className="w-5 h-5 text-slate-950" />
+                  <span>Buy StudyPal</span>
+                </a>
+              </div>
+            </div>
+
+            <div className="md:col-span-5 flex flex-col items-center justify-center bg-white dark:bg-slate-800/90 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 text-center shadow-md">
+              <span className="text-xs font-black uppercase tracking-wider text-emerald-700 dark:text-emerald-400 mb-1">
+                Mobile Quick Checkout
+              </span>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-3">
+                Scan with your phone camera to purchase
+              </p>
+              <ScanToPayQRCode url="https://tinyurl.com/jcr8d7ak" />
+            </div>
+          </div>
+        </section>
+
         {/* AdSense Unit */}
         <div className="mt-10 w-full max-w-3xl">
           <AdSenseBanner client="ca-pub-8350207430692592" slot="1234567890" format="auto" responsive={true} />
@@ -301,7 +338,21 @@ export default function LandingPage({
             <span className="text-slate-500 dark:text-blue-400">© 2026 AI Learning Assistant. Built with Google AI Studio & Firebase.</span>
           </div>
 
-          <div className="flex items-center space-x-5 text-xs">
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs">
+            <button
+              onClick={onOpenAbout}
+              className="text-slate-600 dark:text-blue-300 hover:text-blue-950 dark:hover:text-yellow-400 transition-colors font-semibold cursor-pointer"
+            >
+              About Me
+            </button>
+            <span className="text-slate-300 dark:text-blue-700">•</span>
+            <button
+              onClick={onOpenContact}
+              className="text-slate-600 dark:text-blue-300 hover:text-blue-950 dark:hover:text-yellow-400 transition-colors font-semibold cursor-pointer"
+            >
+              Contact
+            </button>
+            <span className="text-slate-300 dark:text-blue-700">•</span>
             <button
               onClick={() => onOpenLegal?.('terms')}
               id="footer-terms-button"

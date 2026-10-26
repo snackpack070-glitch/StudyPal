@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { BookOpen, Search, Clock, ArrowLeft, CheckCircle, BookOpenCheck, Award } from "lucide-react";
 import { STUDY_MODULES, StudyModule } from "../data/learnData";
 import Markdown from "react-markdown";
+import AdSenseBanner from "./AdSenseBanner";
 
 export default function Learn() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -323,6 +324,11 @@ export default function Learn() {
           )}
         </>
       )}
+
+      {/* AdSense Unit */}
+      <div className="w-full pt-4">
+        <AdSenseBanner client="ca-pub-8350207430692592" format="horizontal" responsive={true} />
+      </div>
     </div>
   );
 }

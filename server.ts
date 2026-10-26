@@ -12,6 +12,18 @@ const PORT = 3000;
 // Increase payload limit for base64 images
 app.use(express.json({ limit: '50mb' }));
 
+// Serve public directory (images, assets, ads.txt, robots.txt)
+app.use(express.static(path.join(process.cwd(), "public")));
+
+// Dedicated routes for AdSense and Search Crawlers
+app.get("/ads.txt", (_req, res) => {
+  res.type("text/plain").sendFile(path.join(process.cwd(), "public", "ads.txt"));
+});
+
+app.get("/robots.txt", (_req, res) => {
+  res.type("text/plain").sendFile(path.join(process.cwd(), "public", "robots.txt"));
+});
+
 // Initialize Gemini SDK
 // Note: It's best to lazy-init or check if key exists when the endpoint is hit,
 // but we'll do it safely inside the route handler.

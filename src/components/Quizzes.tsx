@@ -33,6 +33,7 @@ import {
 } from "lucide-react";
 import Markdown from "react-markdown";
 import { QUIZZES, Quiz, QuizQuestion, QuizAttempt } from "../data/quizData";
+import AdSenseBanner from "./AdSenseBanner";
 
 export default function Quizzes() {
   // State for browser / search
@@ -1631,6 +1632,11 @@ export default function Quizzes() {
         )}
         </motion.div>
       )}
+
+      {/* AdSense Unit */}
+      <div className="w-full pt-4">
+        <AdSenseBanner client="ca-pub-8350207430692592" format="horizontal" responsive={true} />
+      </div>
     </div>
   );
 }
