@@ -17,11 +17,19 @@ app.use(express.static(path.join(process.cwd(), "public")));
 
 // Dedicated routes for AdSense and Search Crawlers
 app.get("/ads.txt", (_req, res) => {
-  res.type("text/plain").sendFile(path.join(process.cwd(), "public", "ads.txt"));
+  res.set({
+    "Content-Type": "text/plain; charset=utf-8",
+    "Cache-Control": "public, max-age=3600"
+  });
+  res.send("google.com, pub-8350207430692592, DIRECT, f08c47fec0942fa0\n");
 });
 
 app.get("/robots.txt", (_req, res) => {
-  res.type("text/plain").sendFile(path.join(process.cwd(), "public", "robots.txt"));
+  res.set({
+    "Content-Type": "text/plain; charset=utf-8",
+    "Cache-Control": "public, max-age=3600"
+  });
+  res.send("User-agent: *\nAllow: /\n\nUser-agent: Mediapartners-Google\nAllow: /\n");
 });
 
 // Initialize Gemini SDK
